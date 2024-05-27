@@ -16,6 +16,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 import pandas as pd
+from pandas.core.dtypes.dtypes import re
 
 
 class MainWindow(QMainWindow):
@@ -109,7 +110,7 @@ class MainWindow(QMainWindow):
 
         # Duplicate Handling ComboBox
         self.duplicate_handling_combo_box = QComboBox()
-        self.duplicate_handling_combo_box.addItems(["Keep First", "Keep Last"])
+        self.duplicate_handling_combo_box.addItems(["Keep First", "Keep Last", "Keep All Ocurrences"])
         self.duplicate_handling_layout.addWidget(self.duplicate_handling_combo_box)
 
         # Save Button
@@ -169,18 +170,22 @@ class MainWindow(QMainWindow):
         selected_columns = [
             item.text() for item in self.column_list_widget.selectedItems()
         ]
-        if self.include_exclude_combo_box.currentText() == "Exclude":
-            selected_columns = [
-                col for col in merged_df.columns if col not in selected_columns
-            ]
-        if selected_columns:
-            merged_df = merged_df[selected_columns]
+
+        include_exclude_option = self.include_exclude_combo_box.currentText()
+
+        if include_exclude_option == "Include":
+            if selected_columns:
+                merged_df = merged_df[selected_columns]
+        elif include_exclude_option == "Exclude":
+            if selected_columns:
+                merged_df = merged_df.drop(columns=selected_columns)
 
         rearranged_columns = [
             self.rearrange_column_list_widget.item(i).text()
             for i in range(self.rearrange_column_list_widget.count())
         ]
-        merged_df = merged_df[rearranged_columns]
+        if set(rearranged_columns).issubset(merged_df.columns):
+            merged_df = merged_df[rearranged_columns]
 
         save_path, _ = QFileDialog.getSaveFileName(
             self, "Save Merged CSV", "", "CSV Files (*.csv)"
@@ -188,7 +193,7 @@ class MainWindow(QMainWindow):
         if save_path:
             merged_df.to_csv(save_path, index=False)
             QMessageBox.information(
-                self, "Success", "CSV files are merged successfully!"
+                self, "Success", "File saved successfully!"
             )
 
 

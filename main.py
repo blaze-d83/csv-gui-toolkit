@@ -63,9 +63,18 @@ class MainWindow(QMainWindow):
         self.options_layout = QVBoxLayout(self.options_widget)
         self.right_layout.addWidget(self.options_widget)
 
+        # Data Extraction Layout
+        self.data_extraction_layout = QHBoxLayout()
+        self.options_layout.addLayout(self.data_extraction_layout)
+
         # Data Extraction Label
         self.data_extraction_label = QLabel("Data Extraction")
-        self.options_layout.addWidget(self.data_extraction_label)
+        self.data_extraction_layout.addWidget(self.data_extraction_label)
+
+        # Include/Exclude ComboBox
+        self.include_exclude_combo_box = QComboBox()
+        self.include_exclude_combo_box.addItems(["Include", "Exclude"])
+        self.data_extraction_layout.addWidget(self.include_exclude_combo_box)
 
         # Column List for Selection
         self.column_list_widget = QListWidget()
@@ -73,19 +82,13 @@ class MainWindow(QMainWindow):
         self.column_list_widget.setSelectionMode(QAbstractItemView.MultiSelection)
         self.options_layout.addWidget(self.column_list_widget)
 
-        # Include/Exclude ComboBox
-        self.include_exclude_combo_box = QComboBox()
-        self.include_exclude_combo_box.addItems(["Include", "Exclude"])
-        self.options_layout.addWidget(self.include_exclude_combo_box)
+        # Rearrange Columns Layout
+        self.rearrange_layout = QVBoxLayout()
+        self.options_layout.addLayout(self.rearrange_layout)
 
         # Rearrange Columns Label
         self.rearrange_columns_label = QLabel("Rearrange Columns")
-        self.options_layout.addWidget(self.rearrange_columns_label)
-
-        # Rearrange Columns Layout
-        self.rearrange_layout_widget = QWidget()
-        self.rearrange_layout = QVBoxLayout(self.rearrange_layout_widget)
-        self.options_layout.addWidget(self.rearrange_layout_widget)
+        self.rearrange_layout.addWidget(self.rearrange_columns_label)
 
         # Rearrange Columns List Widget
         self.rearrange_column_list_widget = QListWidget()
@@ -110,7 +113,7 @@ class MainWindow(QMainWindow):
 
         # Duplicate Handling ComboBox
         self.duplicate_handling_combo_box = QComboBox()
-        self.duplicate_handling_combo_box.addItems(["Keep First", "Keep Last", "Keep All Ocurrences"])
+        self.duplicate_handling_combo_box.addItems(["Keep First", "Keep Last", "Keep All Occurrences"])
         self.duplicate_handling_layout.addWidget(self.duplicate_handling_combo_box)
 
         # Save Button
@@ -209,3 +212,4 @@ if __name__ == "__main__":
     window.show()
 
     sys.exit(app.exec())
+

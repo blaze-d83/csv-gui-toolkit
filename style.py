@@ -7,11 +7,11 @@ rose_pine_style = """
         QLabel {
             font-size       : 12px;
             font-weight     : bold;
-            color           : #eb6f92;
+            color           : #e0def4;
         }
 
         QPushButton {
-            background-color: #3e8fb0;
+            background-color:#907aa9;
             font-size       : 10;
             font-weight     : bold;
             color           : #e0def4;

@@ -16,7 +16,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 import pandas as pd
-from pandas.core.dtypes.dtypes import re
+from style import rose_pine_style
 
 
 class MainWindow(QMainWindow):
@@ -117,6 +117,11 @@ class MainWindow(QMainWindow):
         self.save_button = QPushButton("Save")
         self.save_button.clicked.connect(self.merge_files)
         self.duplicate_handling_layout.addWidget(self.save_button)
+
+        self.set_style()
+
+    def set_style(self):
+        self.setStyleSheet(rose_pine_style)
 
     def open_file_dialog(self):
         file_dialog = QFileDialog(self)
